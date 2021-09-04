@@ -1,0 +1,29 @@
+                 $iIndex      - Optional: (Default = 0) :
+; Return Value ..: Success      - String (object to use in the _FFObj* functions)
+;                  Failure      - Epmty string
+;                  @ERROR       -
+; Author(s) .....: Thorsten Willert
+; Modified ......: mLipok
+; Link ..........:
+; Related .......: _FFObj, _FFObjNew, _FFObjDelete, _FFClick
+; Example .......: Yes
+; ==============================================================================
+Func _FFObjGet($sElement, $sMode = "id", $iIndex = 0)
+    Local Const $sFuncName = "_FFObjGet"
+    Local $sRet = ''
+
+    Switch StringLower($sMode)
+        Case "id"
+            $sRet = ".getElementById('" & $sElement & "')"
+        Case "name"
+            $sRet = ".getElementsByName('" & $sElement & "')[" & $iIndex & "]"
+        Case "class"
+            $sRet = ".getElementsByClassName('" & $sElement & "')[" & $iIndex & "]"
+        Case "tag"
+            $sRet = ".getElementsByTagName('" & $sElement & "')[" & $iIndex & "]"
+        Case "QuerySAll"
+            $sRet = ".querySelectorAll('" & $sElement & "')[" & $iIndex & "]"
+        Case Else
+            SetError(__FFError($sFuncName, $_FF_ERROR_InvalidValue, "(id|name|class|tag) $sMode: " & $sMode))
+            Return ""
+    EndSwitch
